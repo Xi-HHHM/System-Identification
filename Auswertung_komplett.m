@@ -12,8 +12,8 @@ clc;
 DateiMenge = 693;
 Warning = 0.05; % Schwerwert
 %%  Initialisieren
-pathname = '\huang\Messungen\180105_AGR10_Sprung';
-filename = '180105_sprung_agr_10';
+pathname = '';
+filename = '';
 
 % --- Merkmale Initialisieren ---
 MaxAbweichungOn = zeros(DateiMenge,3);  % maximale Abeichung
