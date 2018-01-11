@@ -1,5 +1,5 @@
-% Auswertung der Systemantwort(lambda) auf die AGR-Sprünge
-% Sprünge in positive und negative Richtung
+% Auswertung der Systemantwort(lambda) auf die AGR-SprÃ¼nge
+% SprÃ¼nge in positive und negative Richtung
 % 
 % Daten direkt aus Ordner (s.Unten)
 % importieren
@@ -34,17 +34,17 @@ T1list = zeros(DateiMenge,1);       % Totzeit
 Drehzahl = zeros(DateiMenge,1);     % Drehzahl
 
 MittelDruck = zeros(DateiMenge,1);
-FriLuft = zeros(DateiMenge,1);      % Frischluftfüllung, die den Arbeitspunkt beschreibt
+FriLuft = zeros(DateiMenge,1);      % FrischluftfÃ¼llung, die den Arbeitspunkt beschreibt
 
-FriLuftOn = zeros(DateiMenge,3);    % Frischluftfüllung kurz vor den Sprüngen
+FriLuftOn = zeros(DateiMenge,3);    % FrischluftfÃ¼llung kurz vor den SprÃ¼ngen
 FriLuftOff = zeros(DateiMenge,3);
 
-Diff_Boost_On = zeros(DateiMenge,3);    % Boost kurz vor den Sprüngen
+Diff_Boost_On = zeros(DateiMenge,3);    % Boost kurz vor den SprÃ¼ngen
 Diff_Boost_Off = zeros(DateiMenge,3);
 
 Mittel_bCrit = zeros(DateiMenge,3);     % Mittelwert der bCrit
 
-Diff_Des_On = zeros(DateiMenge,1);      % Des kurz vor den Sprüngen
+Diff_Des_On = zeros(DateiMenge,1);      % Des kurz vor den SprÃ¼ngen
 Diff_Des_Off = zeros(DateiMenge,1);
 
 %% Daten Bearbeiten
@@ -62,7 +62,7 @@ for i = 1 : DateiMenge
         '?GEM_EgrLp_tiFilMdl_VW',...  % Zeitkonstante eAGR
         '?GEM_EgrLp_tiDlyMdl_VW',...  % Totzeit eAGR
         'Epm_nEng_VW\ETKC:1',...      % Drehzahl
-        'rl_w_msg\ETKC:1',...         % Frischluftfüllung
+        'rl_w_msg\ETKC:1',...         % FrischluftfÃ¼llung
         '?PI0',...
         '?Air_pInMnfBoostBas_VW',...
         '?GEMChCont_pInMnf_VW',...
@@ -89,7 +89,7 @@ for i = 1 : DateiMenge
     
     TtIdx = floor(Tt/0.01);
     
-    % --- Positionen der Sprünge(Soll-AGR-Füllung) erkennen ---
+    % --- Positionen der SprÃ¼nge(Soll-AGR-FÃ¼llung) erkennen ---
     posOn  = find(diff((dataIn- minDataIn)>(0.1*max(dataIn-minDataIn)))>0);
     posOff  = find(diff((dataIn- minDataIn)>(0.1*max(dataIn-minDataIn)))<0);
     
@@ -106,7 +106,7 @@ for i = 1 : DateiMenge
     Schnittpunkt2 = floor((posOffTt(1) + posOnTt(2))/2); % Skalar
     Fenster = Schnittpunkt2 - Schnittpunkt(1); % Zeitspanne einzeles Sprungs
     
-    % Soll, Sprünge 
+    % Soll, SprÃ¼nge 
     dataInOn = zeros(3,Fenster+1);
     dataInOff = zeros(3,Fenster+1);
     
@@ -114,31 +114,31 @@ for i = 1 : DateiMenge
     dataOutOn = zeros(3,Fenster+1);
     dataOutOff = zeros(3,Fenster+1);
     
-    % Modellierte eAGR-Sprünge
+    % Modellierte eAGR-SprÃ¼nge
     dataMeAGROn = zeros(3,Fenster+1);
     dataMeAGROff = zeros(3,Fenster+1);
     
-    % Frischluftfüllung kurz vor den Sprüngen
+    % FrischluftfÃ¼llung kurz vor den SprÃ¼ngen
     dataFriLuftOn = zeros(3,Fenster+1);
     dataFriLuftOff = zeros(3,Fenster+1);
     
-    % Boost des Sprüngen Mittelwert
+    % Boost des SprÃ¼ngen Mittelwert
     dataDiff_Boost_On = zeros(3,Fenster+1);
     dataDiff_Boost_Off = zeros(3,Fenster+1);
     
     dataDiff_Des_On = zeros(3,Fenster+1);
     dataDiff_Des_Off = zeros(3,Fenster+1);
     
-    % Boost_KF und Des_KF für die ganze Messung
+    % Boost_KF und Des_KF fÃ¼r die ganze Messung
     Diff_Boost = Daten.Air_pInMnfBoostBas_VW_ETKC_1(:,2) - Daten.GEMChCont_pInMnf_VW_ETKC_1(:,2);
     Diff_Des = Daten.GECGsl_pInMnfDes_VW_ETKC_1(:,2) - Daten.GEMChCont_pInMnf_VW_ETKC_1(:,2);
     
 
-    % Messung in geeignete Länge schneiden
+    % Messung in geeignete LÃ¤nge schneiden
     for ip = 1 : 3
         if length(Schnittpunkt) >= ip
             if ip == 1 && (Schnittpunkt(ip)-Fenster < 0)
-            % Nur für den Fall, dass der erste Sprung ganz am Anfang
+            % Nur fÃ¼r den Fall, dass der erste Sprung ganz am Anfang
             % der Messung sich befindet.
                 dataInOn(ip,end-Schnittpunkt(ip)+1:end) = dataIn(1:Schnittpunkt(ip));
                 dataOutOn(ip,end-Schnittpunkt(ip)+1:end) = dataOut(1:Schnittpunkt(ip));
@@ -329,7 +329,7 @@ DrehzahlOnr = round(Drehzahl/100)*100;
 Best_DrehzahlOn = DrehzahlOnr(IdxBestOn(:,1));
 Best_DrehzahlOff = DrehzahlOnr(IdxBestOff(:,1));
 
-% Frischfüllung kurz vor den Sprüngen von beste Parameterkombination
+% FrischfÃ¼llung kurz vor den SprÃ¼ngen von beste Parameterkombination
 Best_FriLuftOn = FriLuftOn(IdxBestOn(:,1),:);
 Best_FriLuftOff = FriLuftOff(IdxBestOff(:,1),:);
 
@@ -341,7 +341,7 @@ Best_TtOff = Ttlist(IdxBestOff);
 Best_T1On = T1list(IdxBestOn);
 Best_T1Off = T1list(IdxBestOff);
 
-% Boost kurz vor den Sprüngen von beste Parameterkombination
+% Boost kurz vor den SprÃ¼ngen von beste Parameterkombination
 Best_Boost_On = mean(Diff_Boost_On(IdxBestOn),2);
 Best_Boost_Off = mean(Diff_Boost_Off(IdxBestOn),2);
 
