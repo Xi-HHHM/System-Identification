@@ -1,9 +1,4 @@
-% Auswertung der Systemantwort(lambda) auf die AGR-Sprünge
-% Sprünge in positive und negative Richtung
-% 
-% Daten direkt aus Ordner (s.Unten)
-% importieren
-% Xi Huang 19.12.2017
+%19.12.2017
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 clear all;
